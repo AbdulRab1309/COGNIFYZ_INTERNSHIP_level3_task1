@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Level-3 Task:1 CSS Image Manipulation </title>
+  
+  <!-- Import Rubik and Josefin Sans from Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;700&family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Default styles */
+    body {
+      font-family: 'Josefin Sans', sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #888;
+      color: #ffffff;
+      line-height: 1.6;
+    }
+    
+    h1 { 
+      font-family: 'Rubik', sans-serif;
+       color: #000000; 
+    }
+
+    h3{
+      font-family: 'Rubik', sans-serif;
+      color: #fafafa;
+      font-weight: bold;
+    }
+    
+    .task-section {
+      border: 1px solid #444;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 40px;
+      background-color: #2a2a2a;
+    }
+
+    /* CSS-ONLY IMAGE GALLERY (LIGHTBOX) */
+    
+    /* The Thumbnail Grid */
+    .gallery-grid {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+    }
+
+    .thumb-link img {
+      width: 150px;
+      height: 100px;
+      object-fit: cover;
+      border: 2px solid #555;
+      border-radius: 4px;
+      transition: transform 0.2s; /* Smooth hover effect */
+    }
+    .thumb-link img:hover {
+      transform: scale(1.05);
+      border-color: #ffffff;
+    }
+
+    /* The Lightbox Overlay */
+    .lightbox {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.9);
+      
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      z-index: 1000;
+    }
+
+    .lightbox:target {
+      opacity: 1; 
+      pointer-events: auto; 
+    }
+
+    /* The Large Image inside the lightbox */
+    .lightbox img {
+      max-width: 90%;
+      max-height: 90vh;
+      border: 5px solid white;
+      border-radius: 8px;
+    }
+
+    /* The Close Button */
+    .close-btn {
+      position: absolute;
+      top: 30px;
+      right: 40px;
+      color: white;
+      font-size: 40px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    /* CSS-ONLY AUTO SLIDESHOW */
+    
+    /* 1. The Viewport  */
+    .slideshow-container {
+      width: 100%;
+      max-width: 600px;
+      height: 400px;
+      margin: 0 auto;
+      border: 3px solid #555;
+      border-radius: 8px;
+      overflow: hidden; 
+      position: relative;
+    }
+
+    /* 2. The Slider Track */
+    .slider-track {
+      display: flex;
+      width: 300%; 
+      height: 100%;
+
+      /* Apply the animation: Name, Duration, Easing, Infinite loop */
+      animation: slideAnimation 10s infinite; 
+    }
+
+    .slide {
+      width: 100%; 
+      height: 100%;
+    }
+    
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* The Animation Keyframes 
+       I have use transform: translateX() to physically move the track left and right.
+       The percentages dictate timing. We hold on an image for a bit, then transition quickly. */
+    @keyframes slideAnimation {
+      0%   { transform: translateX(0); }      
+      25%  { transform: translateX(0); }       
+      33%  { transform: translateX(-33.33%); } 
+      58%  { transform: translateX(-33.33%); } 
+      66%  { transform: translateX(-66.66%); } 
+      91%  { transform: translateX(-66.66%); } 
+      100% { transform: translateX(0); } 
+    }
+
+  </style>
+</head>
+<body>
+
+  <h1>CSS Image Manipulation Analysis</h1>
+
+  <!-- CSS-ONLY LIGHTBOX GALLERY -->
+  <div class="task-section">
+    <h3>Click-to-Enlarge Gallery (No JS)</h3>
+    <p>Click a thumbnail. Notice how the URL adds a #hash at the end. CSS detects this using the <code>:target</code> pseudo-class to show the hidden overlay.</p>
+    
+    <!-- Thumbnails -->
+    <div class="gallery-grid">
+      <a href="#img1" class="thumb-link"><img src="https://picsum.photos/seed/picsum1/150/100" alt="Thumb 1"></a>
+      <a href="#img2" class="thumb-link"><img src="https://picsum.photos/seed/picsum2/150/100" alt="Thumb 2"></a>
+      <a href="#img3" class="thumb-link"><img src="https://picsum.photos/seed/picsum3/150/100" alt="Thumb 3"></a>
+    </div>
+  </div>
+
+  <!-- Hidden Lightbox Overlays -->
+  <div id="img1" class="lightbox">
+    <a href="#" class="close-btn">&times;</a>
+    <img src="https://picsum.photos/seed/picsum1/800/600" alt="Large 1">
+  </div>
+  
+  <div id="img2" class="lightbox">
+    <a href="#" class="close-btn">&times;</a>
+    <img src="https://picsum.photos/seed/picsum2/800/600" alt="Large 2">
+  </div>
+  
+  <div id="img3" class="lightbox">
+    <a href="#" class="close-btn">&times;</a>
+    <img src="https://picsum.photos/seed/picsum3/800/600" alt="Large 3">
+  </div>
+
+
+  <!-- CSS-ONLY AUTO SLIDESHOW -->
+  <div class="task-section">
+    <h3> Auto-Transition Slideshow (No JS)</h3>
+    <p>This utilizes an ultra-wide flexbox container combined with CSS <code>@keyframes</code> to slide the images back and forth automatically.</p>
+    
+    <div class="slideshow-container">
+      <div class="slider-track">
+        <div class="slide"><img src="https://picsum.photos/seed/slide1/600/400" alt="Slide 1"></div>
+        <div class="slide"><img src="https://picsum.photos/seed/slide2/600/400" alt="Slide 2"></div>
+        <div class="slide"><img src="https://picsum.photos/seed/slide3/600/400" alt="Slide 3"></div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
